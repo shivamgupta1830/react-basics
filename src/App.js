@@ -1,23 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import About from "./About";
+import "./App.css";
+import countries from "./FetchData";
+import Home from "./Home";
+import List from "./List";
+import Navbar from "./Navbar";
+import User from "./User";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [country, setCountry] = useState(null);
+
+  useEffect(() => {
+    const countriesList = async () => {
+      const data = await fetch("https://restcountries.com/v3.1/all");
+      const repsonse = await data.json();
+
+      setCountry(repsonse);
+    };
+    countriesList();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="">
+      <Navbar />
+
+      {country ? (
+        <div>
+          <Home country={country} />
+          {/* <About />
+          <List />
+          <User /> */}
+        </div>
+      ) : (
+        <div className=" p-10 text-center font-bold text-3xl">Loading....</div>
+      )}
     </div>
   );
 }
