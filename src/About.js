@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import UserContext from "./UserContext";
 
 const About = () => {
+  const userData = useContext(UserContext);
   return (
     <div className="h-screen pt-6 px-8 text-center bg-slate-100">
       <p className="text-xl font-normal leading-8">
         Hi,
         <span className="text-blue-900 font-bold bg-lime-200 p-1 rounded-md ">
-          username{" "}
+          {userData.userName}
         </span>
         <br></br>
         Welcome to "Global Insights" – your passport to the world! Global

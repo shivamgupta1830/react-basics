@@ -3,7 +3,7 @@ import UserDetails from "./UserDetails";
 
 const User = () => {
   return (
-    <div className="p-4 text-center">
+    <div className="p-4 text-center h-screen bg-slate-100 ">
       <h2 className="font-bold text-2xl p-4">User Details</h2>
 
       <UserDetails />

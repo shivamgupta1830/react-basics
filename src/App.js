@@ -1,41 +1,63 @@
+import { Outlet, createBrowserRouter } from "react-router-dom";
 import About from "./About";
 import "./App.css";
-import countries from "./FetchData";
-import Home from "./Home";
+
 import List from "./List";
 import Navbar from "./Navbar";
 import User from "./User";
-import { useEffect, useState } from "react";
+
+import Body from "./Body";
+import Error from "./Error";
 
 function App() {
-  const [country, setCountry] = useState(null);
+  // const [country, setCountry] = useState(null);
 
-  useEffect(() => {
-    const countriesList = async () => {
-      const data = await fetch("https://restcountries.com/v3.1/all");
-      const repsonse = await data.json();
+  // useEffect(() => {
+  //   const countriesList = async () => {
+  //     const data = await fetch("https://restcountries.com/v3.1/all");
+  //     const repsonse = await data.json();
 
-      setCountry(repsonse);
-    };
-    countriesList();
-  }, []);
+  //     setCountry(repsonse);
+  //   };
+  //   countriesList();
+  // }, []);
 
   return (
-    <div className="">
+    <div>
       <Navbar />
-
-      {country ? (
-        <div>
-          <Home country={country} />
-          {/* <About />
-          <List />
-          <User /> */}
-        </div>
-      ) : (
-        <div className=" p-10 text-center font-bold text-3xl">Loading....</div>
-      )}
+      <Outlet />
     </div>
   );
 }
 
-export default App;
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/home",
+        element: <Body />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/user",
+        element: <User />,
+      },
+      {
+        path: "/list",
+        element: <List />,
+      },
+    ],
+    errorElement: <Error />,
+  },
+]);
+
+export { App, appRouter };
